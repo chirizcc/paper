@@ -49,11 +49,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @param  \Illuminate\Routing\Router  $router
      * @return void
+     * 去掉了'middleware' => 'web', 参考https://segmentfault.com/q/1010000005681367
      */
     protected function mapWebRoutes(Router $router)
     {
         $router->group([
-            'namespace' => $this->namespace, 'middleware' => 'web',
+            'namespace' => $this->namespace,
         ], function ($router) {
             require app_path('Http/routes.php');
         });
