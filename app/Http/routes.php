@@ -16,4 +16,12 @@
 //});
 
 Route::get('/', 'IndexController@index');
-Route::post('/', 'IndexController@serve');
+//Route::post('/', 'IndexController@serve');
+
+Route::get('/test', function () {
+    return view('test');
+});
+
+Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
+    Route::post('/', 'IndexController@serve');
+});
