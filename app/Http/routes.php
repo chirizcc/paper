@@ -16,3 +16,4 @@
 //});
 
 Route::get('/', 'IndexController@index');
+Route::post('/', 'IndexController@serve');

@@ -37,7 +37,7 @@ class IndexController extends Controller
 
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function($message){
-            return "欢迎关注 overtrue！";
+            return "欢迎关注 社区交流论坛！";
         });
 
         Log::info('return response.');
