@@ -156,6 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * 注册easywechat
+         */
+        Overtrue\LaravelWechat\ServiceProvider::class,
+
     ],
 
     /*
