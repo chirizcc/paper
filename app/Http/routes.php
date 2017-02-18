@@ -18,6 +18,8 @@
 Route::get('/', 'IndexController@index');
 Route::post('/', 'IndexController@serve');
 
-Route::get('/test', function () {
-    return view('test');
+Route::get('/menu', 'MenuController@setMenu');
+
+Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {
+    Route::get('/', 'IndexController@index');
 });
