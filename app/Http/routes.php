@@ -22,8 +22,8 @@ Route::get('/menu', 'MenuController@setMenu');
 
 Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {
     Route::get('/', 'IndexController@index');
-    Route::get('/register', 'Home\RegisterController@index');
-    Route::get('/register/getfloor', 'Home\RegisterController@getFloor');
-    Route::get('/register/getroom', 'Home\RegisterController@getRoom');
-    Route::post('/register', 'Home\RegisterController@register');
+    Route::get('/register', 'RegisterController@index');
+    Route::get('/register/getfloor', 'RegisterController@getFloor');
+    Route::get('/register/getroom', 'RegisterController@getRoom');
+    Route::post('/register', 'RegisterController@register');
 });
