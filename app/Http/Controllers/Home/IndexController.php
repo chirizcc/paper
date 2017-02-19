@@ -11,6 +11,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        echo 1;
+        return redirect('Home/register');
     }
 }
