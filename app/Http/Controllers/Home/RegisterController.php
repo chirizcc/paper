@@ -12,32 +12,38 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        // 查询出所有楼号，并去除重复
+        $build = DB::table('build')->get();
+
+        $list = [];
+        foreach ($build as $key => $value) {
+//            $list[$value->build][$value->floor][$value->id] = ['id' => $value->id, 'root' => $value->room];
+            $list[$value->build][$value->floor][$value->id] = $value->room;
+        }
+
+        return view('register.index',['build' => json_encode($this->getPicker($list))]);
+        /*// 查询出所有楼号，并去除重复
         $build = array_unique(DB::table('build')->pluck('build'));
         // 对楼号进行排序
         sort($build);
 
-        return view('register.index',['build' => $build]);
+        return view('register.index',['build' => $build]);*/
     }
 
-    public function register()
+    private function getPicker($data)
     {
-
+        $result = [];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $result[] = ['label' => $key, 'value' => $key, 'children' => $this->getPicker($value)];
+            } else {
+                $result[] = ['label' => $value, 'value' => $key];
+            }
+        }
+        return $result;
     }
 
-    public function getFloor(Request $request)
+    public function register(Request $request)
     {
-        $build = $request->input('build');
-        $floor = array_unique(DB::table('build')->where('build', '=', $build)->pluck('floor'));
-        sort($floor);
-        return $floor;
-    }
-
-    public function getRoom(Request $request)
-    {
-        $floor = $request->input('floor');
-        $room = array_unique(DB::table('build')->where('floor', '=', $floor)->pluck('room'));
-        sort($room);
-        return $room;
+        dd($request->input());
     }
 }
