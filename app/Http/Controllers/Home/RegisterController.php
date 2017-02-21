@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class RegisterController extends Controller
+class RegisterController extends HomeController
 {
     public function index()
     {
@@ -16,19 +15,17 @@ class RegisterController extends Controller
 
         $list = [];
         foreach ($build as $key => $value) {
-//            $list[$value->build][$value->floor][$value->id] = ['id' => $value->id, 'root' => $value->room];
             $list[$value->build][$value->floor][$value->id] = $value->room;
         }
 
-        return view('register.index',['build' => json_encode($this->getPicker($list))]);
-        /*// 查询出所有楼号，并去除重复
-        $build = array_unique(DB::table('build')->pluck('build'));
-        // 对楼号进行排序
-        sort($build);
-
-        return view('register.index',['build' => $build]);*/
+        return view('home.register.index', ['build' => json_encode($this->getPicker($list))]);
     }
 
+    /**
+     *  将数组转换成微信picker组件需要的格式
+     * @param array $data
+     * @return array
+     */
     private function getPicker($data)
     {
         $result = [];
@@ -44,6 +41,15 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        dd($request->input());
+        $data = $request->except('_token');
+        $residents = DB::table('residents')->where('name', '=', trim($data['name']))->where('build_id', '=', $data['room'])->first();
+        if (count($residents) <= 0) {
+
+        } else {
+            DB::table('user')->insert(
+                ['name' => trim($data['name']), 'residents_id' => $residents->id, 'openid' => session('wechat.oauth_user')->id]
+            );
+            return redirect('home/');
+        }
     }
 }

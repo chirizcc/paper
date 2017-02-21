@@ -20,8 +20,11 @@ Route::post('/', 'IndexController@serve');
 
 Route::get('/menu', 'MenuController@setMenu');
 
-Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {
+Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth', 'user']], function () {
     Route::get('/', 'IndexController@index');
+});
+
+Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {
     Route::get('/register', 'RegisterController@index');
     Route::post('/register', 'RegisterController@register');
 });

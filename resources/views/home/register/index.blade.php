@@ -14,6 +14,7 @@
     <h1>完善资料</h1>
 </div>
 <form action="{{action('Home\RegisterController@register')}}" method="post" id="form">
+    <input type="hidden" value="{{csrf_token()}}" name="_token">
     <div class="weui-cells__title">请填写您的居住信息</div>
     <!-- 带按钮的输入框 -->
     <div class="weui-cells weui-cells_form">
@@ -22,7 +23,7 @@
                 <label class="weui-label">楼号</label>
             </div>
             <div class="weui-cell__ft">
-                <a href="javascript:;" class="weui-vcode-btn" onclick="cloose()" id="buildBtn">选择楼号</a>
+                <a href="javascript:void (0)" class="weui-vcode-btn" onclick="cloose()" id="buildBtn">选择楼号</a>
             </div>
         </div>
     </div>
@@ -34,7 +35,7 @@
                 <label class="weui-label">楼层</label>
             </div>
             <div class="weui-cell__ft">
-                <a href="javascript:;" class="weui-vcode-btn" onclick="cloose()" id="floorBtn">选择楼层</a>
+                <a href="javascript:void (0)" class="weui-vcode-btn" onclick="cloose()" id="floorBtn">选择楼层</a>
             </div>
         </div>
     </div>
@@ -46,7 +47,7 @@
                 <label class="weui-label">房间号</label>
             </div>
             <div class="weui-cell__ft">
-                <a href="javascript:;" class="weui-vcode-btn" onclick="cloose()" id="roomBtn">选择房间号</a>
+                <a href="javascript:void (0)" class="weui-vcode-btn" onclick="cloose()" id="roomBtn">选择房间号</a>
                 <input type="hidden" name="room" id="room" required pattern="[0-9]{1,2}" emptyTips="请选择居住房间"
                        notMatchTips="请选择正确的居住房间">
             </div>
