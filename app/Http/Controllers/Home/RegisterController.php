@@ -46,10 +46,16 @@ class RegisterController extends HomeController
         if (count($residents) <= 0) {
             return $this->errorPage(action('Home\RegisterController@index'), '该房间无此人，无法注册');
         } else {
-            DB::table('user')->insert(
-                ['name' => trim($data['name']), 'residents_id' => $residents->id, 'openid' => session('wechat.oauth_user')->id]
-            );
-            return $this->successPage(action('Home\IndexController@index'));
+            $user = DB::table('user')->where('name', '=', trim($data['name']))->where('residents_id', '=', $data['room'])->first();
+            if (count($user) > 0) {
+                return $this->errorPage(action('Home\RegisterController@index'), '该人以注册过，无法重复注册');
+            } else {
+                DB::table('user')->insert(
+                    ['name' => trim($data['name']), 'residents_id' => $residents->id, 'openid' => session('wechat.oauth_user')->id]
+                );
+                return $this->successPage(action('Home\IndexController@index'));
+            }
+
         }
     }
 }
