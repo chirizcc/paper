@@ -44,12 +44,12 @@ class RegisterController extends HomeController
         $data = $request->except('_token');
         $residents = DB::table('residents')->where('name', '=', trim($data['name']))->where('build_id', '=', $data['room'])->first();
         if (count($residents) <= 0) {
-
+            return $this->errorPage(action('Home\RegisterController@index'), '该房间无此人，无法注册');
         } else {
             DB::table('user')->insert(
                 ['name' => trim($data['name']), 'residents_id' => $residents->id, 'openid' => session('wechat.oauth_user')->id]
             );
-            return redirect('home/');
+            return $this->successPage(action('Home\IndexController@index'));
         }
     }
 }
