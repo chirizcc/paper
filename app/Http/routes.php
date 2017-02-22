@@ -22,6 +22,7 @@ Route::get('/menu', 'MenuController@setMenu');
 
 Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth', 'user']], function () {
     Route::get('/', 'IndexController@index');
+    Route::get('/section/{id}', 'SectionController@index');
 });
 
 Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {

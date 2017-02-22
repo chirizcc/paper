@@ -8,12 +8,61 @@
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.1/weui.min.css">
     <link rel="{{asset('/resources/css/public.css')}}">
     <title>社区交流</title>
+    <style>
+        .banner {
+            position: relative;
+            overflow: auto;
+        }
+
+        .banner li {
+            list-style: none;
+        }
+
+        .banner ul li {
+            float: left;
+        }
+    </style>
 </head>
 <body ontouchstart>
-<img src="{{session('wechat.oauth_user')->avatar}}" alt="出错了">
+
+<div class="banner">
+    <ul>
+        <li><img src="{{asset('/resources/image/image1.jpg')}}" alt=""></li>
+        <li><img src="{{asset('/resources/image/image2.jpg')}}" alt=""></li>
+        <li><img src="{{asset('/resources/image/image3.jpg')}}" alt=""></li>
+    </ul>
+</div>
+
+<!-- 九宫格 -->
+<div class="weui-grids">
+
+    @foreach ($section as $value)
+        <a href="{{action('Home\SectionController@index', ['id' => $value->id])}}" class="weui-grid">
+            <!-- 图标 -->
+            <div class="weui-grid__icon">
+                <img src="@if (!empty($value->icon)) {{$value->icon}} @else{{asset('/resources/image/image1.jpg')}}@endif"
+                     alt="">
+            </div>
+            <!-- 标签文字 -->
+            <p class="weui-grid__label">{{ $value->name  }}</p>
+        </a>
+    @endforeach
+
+</div>
+
 </body>
 
 <script src="{{asset('/resources/js/jquery-3.1.1.min.js')}}"></script>
+<script src="http://unslider.com/unslider.js"></script>
 <script type="text/javascript" src="{{asset('/resources/weui/dist/weui.min.js')}}"></script>
+
+<script>
+    $(function () {
+        $('.banner').unslider({
+            dots: true,
+            fluid: true
+        });
+    });
+</script>
 
 </html>

@@ -18,7 +18,7 @@
     </div>
     <div class="weui-msg__opr-area">
         <p class="weui-btn-area">
-            <a href="javascript:history.back();" class="weui-btn weui-btn_primary">返回</a>
+            <a href="{{ $url }}" class="weui-btn weui-btn_primary">返回</a>
         </p>
     </div>
 </div>
