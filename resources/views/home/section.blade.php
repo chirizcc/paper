@@ -13,7 +13,7 @@
 
 <!-- 按钮两侧留有空隙 -->
 <div class="weui-btn-area">
-    <a href="#" class="weui-btn weui-btn_primary">发帖</a>
+    <a href="{{action('Home\PostController@create', ['section' => $section->id])}}" class="weui-btn weui-btn_primary">发帖</a>
 </div>
 
 <!-- 图文组合列表 -->

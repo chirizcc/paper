@@ -23,7 +23,8 @@ class UserMiddleware
         if (count($user) <= 0) {
             return redirect('home/register');
         }
-
+//        dd($user);
+        $request->session()->put('user', $user);
         return $next($request);
     }
 }
