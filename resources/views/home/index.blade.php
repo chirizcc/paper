@@ -50,6 +50,22 @@
 
 </div>
 
+<div class="weui-tab">
+    <div class="weui-tab__panel">
+
+    </div>
+    <div class="weui-tabbar">
+        <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+            <img src="{{asset('/resources/image/icon_nav_button.png')}}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我的</p>
+        </a>
+        <a href="javascript:;" class="weui-tabbar__item">
+            <img src="{{asset('/resources/image/icon_nav_cell.png')}}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">管理</p>
+        </a>
+    </div>
+</div>
+
 </body>
 
 <script src="{{asset('/resources/js/jquery-3.1.1.min.js')}}"></script>
