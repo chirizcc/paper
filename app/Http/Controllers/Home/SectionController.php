@@ -17,10 +17,11 @@ class SectionController extends HomeController
         }
 
         if ($id == 1) {
-            $data = [];
+            $data = DB::table('post')->orderBy('id', 'desc')->get();
         } else {
             $data = DB::table('post')->where('section_id', '=', $id)->get();
         }
+//        dd($data);
 
         return view('home.section', ['section' => $section, 'data' => $data]);
     }

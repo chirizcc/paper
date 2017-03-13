@@ -69,7 +69,7 @@
 </body>
 
 <script src="{{asset('/resources/js/jquery-3.1.1.min.js')}}"></script>
-<script src="http://unslider.com/unslider.js"></script>
+<script src="{{asset('/resources/js/unslider.js')}}"></script>
 <script type="text/javascript" src="{{asset('/resources/weui/dist/weui.min.js')}}"></script>
 
 <script>

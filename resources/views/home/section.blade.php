@@ -22,38 +22,21 @@
     <div class="weui-panel__hd">图文组合列表</div>--}}
     <!-- body 部分 -->
     <div class="weui-panel__bd">
-        <!-- 一个列表条目 -->
-        <a href="#" class="weui-media-box weui-media-box_appmsg">
-            <div class="weui-media-box__hd">
-                <img src="{{asset('/resources/image/default.jpg')}}" alt="" class="weui-media-box__thumb">
-            </div>
-            <div class="weui-media-box__bd">
-                <h4 class="weui-media-box__title">约跑</h4>
-                <p class="weui-media-box__desc">约个明日早晨6点绕小区怕跑步的</p>
-            </div>
-        </a>
+        @if (!empty($data))
+            @foreach ($data as $item)
+                <a href="{{ action('Home\PostController@index', ['id' => $item->id])  }}" class="weui-media-box weui-media-box_appmsg">
+                    <div class="weui-media-box__hd">
+                        <img src="{{asset('/resources/image/default.jpg')}}" alt="" class="weui-media-box__thumb">
+                    </div>
+                    <div class="weui-media-box__bd">
+                        <h4 class="weui-media-box__title">{{ $item->title  }}</h4>
+                        <p class="weui-media-box__desc">{{  substr($item->content, 0, 10)  }}</p>
+                    </div>
+                </a>
 
-        <!-- 一个列表条目 -->
-        <a href="#" class="weui-media-box weui-media-box_appmsg">
-            <div class="weui-media-box__hd">
-                <img src="{{asset('/resources/image/default.jpg')}}" alt="" class="weui-media-box__thumb">
-            </div>
-            <div class="weui-media-box__bd">
-                <h4 class="weui-media-box__title">有没有喜欢广场舞的</h4>
-                <p class="weui-media-box__desc">有的话改日一起啊...</p>
-            </div>
-        </a>
+            @endforeach
+        @endif
 
-        <!-- 一个列表条目 -->
-        <a href="#" class="weui-media-box weui-media-box_appmsg">
-            <div class="weui-media-box__hd">
-                <img src="{{asset('/resources/image/default.jpg')}}" alt="" class="weui-media-box__thumb">
-            </div>
-            <div class="weui-media-box__bd">
-                <h4 class="weui-media-box__title">爱狗出毛病了</h4>
-                <p class="weui-media-box__desc">我家爱狗最近老是掉毛，是不是出什么毛病了...</p>
-            </div>
-        </a>
     </div>
     <!-- foot 部分 -->
     <div class="weui-panel__ft">
