@@ -13,18 +13,20 @@
 
 <!-- 按钮两侧留有空隙 -->
 <div class="weui-btn-area">
-    <a href="{{action('Home\PostController@create', ['section' => $section->id])}}" class="weui-btn weui-btn_primary">发帖</a>
+    <a href="{{action('Home\PostController@create', ['section' => $section->id])}}"
+       class="weui-btn weui-btn_primary">发帖</a>
 </div>
 
 <!-- 图文组合列表 -->
 <div class="weui-panel weui-panel_access">
-    {{--<!-- head 部分 -->
-    <div class="weui-panel__hd">图文组合列表</div>--}}
-    <!-- body 部分 -->
+{{--<!-- head 部分 -->
+<div class="weui-panel__hd">图文组合列表</div>--}}
+<!-- body 部分 -->
     <div class="weui-panel__bd">
         @if (!empty($data))
             @foreach ($data as $item)
-                <a href="{{ action('Home\PostController@index', ['id' => $item->id])  }}" class="weui-media-box weui-media-box_appmsg">
+                <a href="{{ action('Home\PostController@index', ['id' => $item->id])  }}"
+                   class="weui-media-box weui-media-box_appmsg">
                     <div class="weui-media-box__hd">
                         <img src="{{asset('/resources/image/default.jpg')}}" alt="" class="weui-media-box__thumb">
                     </div>

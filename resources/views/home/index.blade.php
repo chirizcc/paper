@@ -18,10 +18,10 @@
             list-style: none;
         }
 
-        .banner ul li {
-            float: left;
-        }
-    </style>
+.banner ul li {
+float: left;
+}
+</style>
 </head>
 <body ontouchstart>
 
@@ -55,11 +55,15 @@
 
     </div>
     <div class="weui-tabbar">
-        <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+        <a href="{{action('Home\IndexController@user')}}" class="weui-tabbar__item weui-bar__item_on">
             <img src="{{asset('/resources/image/icon_nav_button.png')}}" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">我的</p>
         </a>
-        <a href="javascript:;" class="weui-tabbar__item">
+        <a href="{{action('Home\IndexController@user')}}" class="weui-tabbar__item">
+            <img src="{{asset('/resources/image/icon_nav_nav.png')}}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">活动</p>
+        </a>
+        <a href="{{action('Home\AdminController@index')}}" class="weui-tabbar__item">
             <img src="{{asset('/resources/image/icon_nav_cell.png')}}" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">管理</p>
         </a>
