@@ -54,13 +54,13 @@ float: left;
     <div class="weui-tab__panel">
 
     </div>
-    <div class="weui-tabbar">
+    <div class="weui-tabbar" style="position: fixed;bottom: 0;">
         <a href="{{action('Home\IndexController@user')}}" class="weui-tabbar__item weui-bar__item_on">
             <img src="{{asset('/resources/image/icon_nav_button.png')}}" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">我的</p>
         </a>
-        <a href="{{action('Home\IndexController@user')}}" class="weui-tabbar__item">
-            <img src="{{asset('/resources/image/icon_nav_nav.png')}}" alt="" class="weui-tabbar__icon">
+        <a href="{{action('Home\IndexController@activity')}}" class="weui-tabbar__item">
+            <img src="{{asset('/resources/image/icon_nav_layout.png')}}" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">活动</p>
         </a>
         <a href="{{action('Home\AdminController@index')}}" class="weui-tabbar__item">

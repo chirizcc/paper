@@ -58,4 +58,10 @@ class IndexController extends HomeController
             ->where('id', $data['id'])
             ->update(['name_look' => $value]);
     }
+
+    public function activity()
+    {
+        $data = DB::table('activity')->get();
+        return view('home.activity', ['data' => $data]);
+    }
 }

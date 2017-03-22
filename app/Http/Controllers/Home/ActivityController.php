@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\DB;
+use DB;
 
-class PostController extends HomeController
+use EasyWeChat\Foundation\Application;
+
+
+class ActivityController extends HomeController
 {
     /**
      * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $id = $request->input('id');
-        $data = DB::table('post')->where('id', '=', $id)->first();
+        $data = DB::table('activity')->where('id', '=', $id)->first();
         $user = DB::table('user')->where('id', '=', $data->user_id)->first();
         $userName = $user->name;
         $roomId = $user->residents_id;
@@ -33,44 +35,40 @@ class PostController extends HomeController
             $str .= $build->build . '#' . $build->floor . '楼';
         }
 
-        $comments = DB::table('comment')->where('post_id', '=', $id)->get();
-        $comment = [];
-        foreach ($comments as $k => $v) {
-            $cUser = DB::table('user')->where('id', '=', $v->user_id)->first();
+        /*$app = new Application(config('wechat'));
+        $userService = $app->user;
+        $user = $userService->get(DB::table('user')->where('id', '=', $data->user_id)->value('openid'));
+        dd($user);*/
 
-            $str = '';
-            if ($cUser->name_look == 1) {
-                $str = DB::table('residents')->where('id', '=', $roomId)->value('name') . ' ';
+        $join = DB::table('join')->where('activity_id', '=', $id)->get();
+
+        $joinUser = [];
+        foreach ($join as $k => $v) {
+            $jUser = DB::table('user')->where('id', '=', $v->user_id)->first();
+            $str = $jUser->name . ' ';
+            if ($jUser->name_look == 1) {
+                $str .= DB::table('residents')->where('id', '=', $jUser->residents_id)->value('name') . ' ';
             }
 
-            if ($cUser->room_look == 1) {
-                $build = DB::table('build')->where('id', '=', $roomId)->first();
+            if ($jUser->room_look == 1) {
+                $build = DB::table('build')->where('id', '=', $jUser->residents_id)->first();
                 $str .= $build->build . '#' . $build->floor . '楼';
             }
-            $comment[$k] = ['name' => $cUser->name,'str' => $str, 'content' => $v->content];
+            $joinUser[$k] = $str;
         }
 
-        return view('home.post.index', ['data' => $data, 'user' => ['name' => $userName, 'str' => $str], 'comment' => $comment]);
+        return view('home.activity.index', ['data' => $data, 'user' => ['name' => $userName, 'str' => $str], 'join' => $joinUser]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
-//        dd($request->session()->get('user')[0]->id);
-        $nowSection = $request->input('section');
-        $section = DB::table('section')->get();
-        unset($section[0]);
-        foreach ($section as $key => $value) {
-            if ($value->id == $nowSection) {
-                $value->status = 1;
-            }
-        }
-        return view('home.post.add', ['section' => $section, 'user_id' => $request->session()->get('user')[0]->id]);
+        return view('home.activity.add', ['user_id' => $request->session()->get('user')[0]->id]);
     }
 
     /**
@@ -84,12 +82,12 @@ class PostController extends HomeController
         $data = $request->except('_token');
 
         try {
-            $id = DB::table('post')->insertGetId($data);
+            $id = DB::table('activity')->insertGetId($data);
         } catch (\Exception $e) {
-            return $this->errorPage(action('Home\IndexController@index'), '发帖失败');
+            return $this->errorPage(action('Home\IndexController@index'), '发起活动失败');
         }
 
-        return $this->successPage(action('Home\PostController@index', ['id' => $id]));
+        return $this->successPage(action('Home\ActivityController@index', ['id' => $id]));
     }
 
     /**
@@ -137,16 +135,17 @@ class PostController extends HomeController
         //
     }
 
-    public function comment(Request $request)
+    public function join($id)
     {
-        $data = $request->except('_token');
+        $user_id = session('user')[0]->id;
 
-        try {
-            DB::table('comment')->insert(['post_id' => $data['id'], 'user_id' => session('user')[0]->id, 'content' => $data['content']]);
-        } catch (\Exception $e) {
-            return $this->errorPage(action('Home\PostController@index', ['id' => $data['id']]),'评论失败');
+        $join = DB::table('join')->where('activity_id', '=', $id)->where('user_id', '=', $user_id)->first();
+
+        if (!empty($join)) {
+            return $this->errorPage(action('Home\ActivityController@index', ['id' => $id]), '你已参与该活动，无法重复参与');
         }
 
-        return $this->successPage(action('Home\PostController@index', ['id' => $data['id']]));
+        DB::table('join')->insert(['user_id' => $user_id, 'activity_id' => $id]);
+        return $this->successPage(action('Home\ActivityController@index', ['id' => $id]));
     }
 }

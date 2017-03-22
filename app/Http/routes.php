@@ -23,13 +23,17 @@ Route::get('/menu', 'MenuController@setMenu');
 Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth', 'user']], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/user', 'IndexController@user');
+    Route::get('/activitys', 'IndexController@activity');
     Route::post('/changRoomLook', 'IndexController@changRoomLook');
     Route::post('/changNameLook', 'IndexController@changNameLook');
     Route::get('/section/{id}', 'SectionController@index');
     Route::resource('post', 'PostController');
+    Route::post('post/comment', 'PostController@comment');
+    Route::resource('activity', 'ActivityController');
     Route::get('/admin', 'AdminController@index');
     Route::get('/admin/post', 'AdminController@post');
     Route::get('/admin/delPost/{id}', 'AdminController@delPost');
+    Route::get('/activity/join/{id}', 'ActivityController@join');
 });
 
 Route::group(['namespace' => 'Home','prefix' => 'home','middleware' => ['web', 'wechat.oauth']], function () {
