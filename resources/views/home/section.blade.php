@@ -32,7 +32,7 @@
                     </div>
                     <div class="weui-media-box__bd">
                         <h4 class="weui-media-box__title">{{ $item->title  }}</h4>
-                        <p class="weui-media-box__desc">{{  substr($item->content, 0, 10)  }}</p>
+                        <p class="weui-media-box__desc">{{  $item->content  }}</p>
                     </div>
                 </a>
 

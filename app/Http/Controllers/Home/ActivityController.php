@@ -45,16 +45,16 @@ class ActivityController extends HomeController
         $joinUser = [];
         foreach ($join as $k => $v) {
             $jUser = DB::table('user')->where('id', '=', $v->user_id)->first();
-            $str = $jUser->name . ' ';
+            $Jstr = $jUser->name . ' ';
             if ($jUser->name_look == 1) {
-                $str .= DB::table('residents')->where('id', '=', $jUser->residents_id)->value('name') . ' ';
+                $Jstr .= DB::table('residents')->where('id', '=', $jUser->residents_id)->value('name') . ' ';
             }
 
             if ($jUser->room_look == 1) {
                 $build = DB::table('build')->where('id', '=', $jUser->residents_id)->first();
-                $str .= $build->build . '#' . $build->floor . '楼';
+                $Jstr .= $build->build . '#' . $build->floor . '楼';
             }
-            $joinUser[$k] = $str;
+            $joinUser[$k] = $Jstr;
         }
 
         return view('home.activity.index', ['data' => $data, 'user' => ['name' => $userName, 'str' => $str], 'join' => $joinUser]);
